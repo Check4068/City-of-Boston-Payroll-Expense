@@ -142,7 +142,6 @@ app.layout = html.Div([
                 html.H6(children='Top Total Earnings by Department and County'),
                 generate_table(df)], 
                 id ='table_div'),
-                style={'display': 'inline-block','width' : '30%', 'float' : 'left','margin': 'auto'}),
 
 ])
 server = app.server
