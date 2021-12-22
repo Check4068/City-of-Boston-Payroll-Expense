@@ -19,9 +19,9 @@ app = dash.Dash(__name__, external_stylesheets=stylesheet)
 
 
 
-Pay2020=pd.read_csv('/Users/check4068/Desktop/已完成课业/Jasmine Data Science/Payroll2020.csv',header=0)
+Pay2020=pd.read_csv('Payroll2020.csv',header=0)
 
-fname = "/Users/check4068/Desktop/已完成课业/Jasmine Data Science/US (1)/US.txt"
+fname = "US.txt"
 
 with open(fname) as fin:
     data_str = fin.read()
