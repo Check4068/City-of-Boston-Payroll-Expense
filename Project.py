@@ -115,6 +115,7 @@ app.layout = html.Div([
     #html.Div(id='table_div')
     ])
 
+server = app.server
 @app.callback(
     Output(component_id="map_plot", component_property="figure"),
     [Input(component_id="County_checklist", component_property="value")]
@@ -137,4 +138,3 @@ def update_plot(counties):
 
 if __name__ == '__main__':
     app.run_server(debug=True)
-    server = app.server
