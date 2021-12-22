@@ -1,5 +1,5 @@
 """
-Dashboard created 
+Dashboard 
 """
 
 import dash
@@ -138,9 +138,12 @@ app.layout = html.Div([
                   id = 'County_checklist'),style={'width' : '15%','float' : 'left','display': 'inline-block','margin': 'auto'}),
                 html.Div(dcc.Graph(figure=fig2, id='map_plot'),style={'width' : '60%','float' : 'right','display': 'inline-block','margin': 'auto'})],
              style={'display': 'inline-block','width' : '50%', 'float' : 'right','margin': 'auto'}),
-    html.Div(id='table_div')
-    ])
+    html.Div(children=[
+                html.H4(children='StackOverflow - Html dash table'),
+                generate_table(df)], 
+                id ='table_div'), 
 
+])
 server = app.server
 
 @app.callback(
