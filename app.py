@@ -171,7 +171,7 @@ def update_plot(counties):
     [Input(component_id="County_Dropdown", component_property="value")]
 )
 def update_table(counties):
-    x = df[df.county.isin(counties)].sort_values('City')
+    x = df[df.county.isin(counties)].sort_values('Total.Earnings', ascending= False)
     return generate_table(x)
 
 if __name__ == '__main__':
