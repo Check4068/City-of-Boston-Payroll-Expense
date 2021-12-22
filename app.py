@@ -1,5 +1,5 @@
 """
-Dashboard 
+Dashboard
 """
 
 import dash
@@ -139,9 +139,9 @@ app.layout = html.Div([
                 html.Div(dcc.Graph(figure=fig2, id='map_plot'),style={'width' : '60%','float' : 'right','display': 'inline-block','margin': 'auto'})],
              style={'display': 'inline-block','width' : '50%', 'float' : 'right','margin': 'auto'}),
     html.Div(children=[
-                html.H6(children='Top Total Earnings by Department and County'),
+                html.H4(children='Top Earnings Table'),
                 generate_table(df)], 
-                id ='table_div'),
+                id ='table_div'), 
 
 ])
 server = app.server
@@ -168,10 +168,10 @@ def update_plot(counties):
 
 @app.callback(
     Output(component_id="table_div", component_property="children"),
-    [Input(component_id="County_Dropdown", component_property="value")]
+    [Input(component_id="County_checklist", component_property="value")]
 )
 def update_table(counties):
-    x = df[df.county.isin(counties)].sort_values('Total.Earnings', ascending= False)
+    x = df[df.county.isin(counties)].sort_values('Total.Earnings',ascending=False)
     return generate_table(x)
 
 if __name__ == '__main__':
