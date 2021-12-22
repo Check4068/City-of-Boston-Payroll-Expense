@@ -139,9 +139,10 @@ app.layout = html.Div([
                 html.Div(dcc.Graph(figure=fig2, id='map_plot'),style={'width' : '60%','float' : 'right','display': 'inline-block','margin': 'auto'})],
              style={'display': 'inline-block','width' : '50%', 'float' : 'right','margin': 'auto'}),
     html.Div(children=[
-                html.H4(children='StackOverflow - Html dash table'),
+                html.H6(children='Top Total Earnings by Department and County'),
                 generate_table(df)], 
-                id ='table_div'), 
+                id ='table_div'),
+                style={'display': 'inline-block','width' : '30%', 'float' : 'left','margin': 'auto'}),
 
 ])
 server = app.server
