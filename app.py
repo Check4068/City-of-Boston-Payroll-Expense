@@ -67,17 +67,48 @@ fig2 = px.pie(df_map,names='county',values='Total.Earnings')
 
 
 app.layout = html.Div([
-    html.H1('My First MA705 Dashboard!',
-            style={'textAlign' : 'center'}),
-    html.H5('Users can click on one or multiple counties to study the top 50 departments with the highest total payroll expenses in the state of Massachusetts. Moreover, the pie chart would allow us to compare the proportion of total payroll earnings across the selected counties. Users who are interested in discovering high payroll expense on the department and county level could utilize this dashboard as an initial observation to generate idea for further research directions.',
-            style={'textAlign' : 'center'}),
-    html.A('Click here to go to Bentley',
-           href='http://www.bentley.edu',
-           target='_blank'),
-    dcc.Graph(figure=fig, id='univ_plot'),
-    dcc.Graph(figure=fig2, id='map_plot'),
-    html.Div([html.H4('Countys to Display for Pie Chart:'),
-              dcc.Checklist(
+    html.H1('City of Boston Payroll 2020',
+            style={'textAlign': 'center'}),
+    html.H6('Jianan Ye',
+            style={'textAlign': 'center'}),
+    html.A('Click here for data source',
+           href='https://data.boston.gov/dataset/employee-earnings-report',
+           target='_blank', style={'textAlign': 'left'}),
+    html.P(
+        'In this project, users can study the top 10 departments with the highest payroll expense in the state of Massachusetts based on selected county.',
+        style={'textAlign': 'left'}),
+    html.P(
+        'Users can click on one or multiple counties to study the top 50 departments with the highest total payroll expenses in the state of Massachusetts. Moreover, the pie chart would allow us to compare the proportion of total payroll earnings across the selected counties. Users who are interested in discovering high payroll expense on the department and county level could utilize this dashboard as an initial observation to generate idea for further research directions.',
+        style={'textAlign': 'left'}),
+
+
+
+
+    html.Div([html.P('The dropdown box is an interactive element where the users have the option to choose the counties they are interested in. It will generate a bar plot that reflects the sum of total earnings on the Y-axis, the top 50 department names with the highest pay in the county on the x-axis.'),
+
+              html.H4('Countys to Display for Bar Plot:'),
+              html.Div(dcc.Dropdown(
+                        options=[{'label':'Suffolk', 'value':'Suffolk'},
+                           {'label':'Norfolk', 'value': 'Norfolk'},
+                           {'label':'Middlesex', 'value': 'Middlesex'},
+                           {'label':'Worcester', 'value': 'Worcester'},
+                           {'label':'Plymouth', 'value':  'Plymouth'},
+                           {'label':'Essex', 'value':  'Essex'},
+                           {'label':'Bristol', 'value':  'Bristol'},
+                           {'label':'Barnstable', 'value': 'Barnstable'},
+                           {'label':'Hampden', 'value':  'Hampden'},
+                           {'label':'Dukes', 'value':  'Dukes'},
+                           {'label':'Nantucket', 'value':  'Nantucket'},
+                           {'label':'Berkshire', 'value':  'Berkshire'}],
+                            value='Suffolk',
+                            id = 'County_Dropdown'),style={'flex-direction':'row'}),
+              html.Div(dcc.Graph(figure=fig, id='univ_plot'),style={'flex-direction':'row'}),],
+                            style={'display': 'inline-block','width' : '45%', 'float' : 'left','margin': 'auto'}),
+
+
+    html.Div([html.P('The check box element creates an interactive platform for users to compare the percentage of total earnings across counties. For example, if we choose Suffolk and Middlesex as the base of our analysis, then we can see that Suffolk is 86.9 percent compared to the sum of Suffolk and Middlesex. If we had chosen all counties, we would be able to see how much funds were dedicated to the city employee payroll in each county across the state of Massachusetts.'),
+                html.H4('Countys to Display for Pie Chart:'),
+                html.Div(dcc.Checklist(
                   options=[{'label':'Suffolk', 'value':'Suffolk'},
                            {'label':'Norfolk', 'value': 'Norfolk'},
                            {'label':'Middlesex', 'value': 'Middlesex'},
@@ -92,30 +123,17 @@ app.layout = html.Div([
                            {'label':'Berkshire', 'value':  'Berkshire'}],
                   value=['Suffolk','Norfolk','Middlesex','Worcester','Plymouth','Essex',
                          'Bristol','Barnstable','Hampden','Dukes','Nantucket','Berkshire'],
-                  id = 'County_checklist')],
-             style={'width' : '50%', 'float' : 'right'}),
+                  id = 'County_checklist'),style={'width' : '15%','float' : 'left','display': 'inline-block','margin': 'auto'}),
+                html.Div(dcc.Graph(figure=fig2, id='map_plot'),style={'width' : '60%','float' : 'right','display': 'inline-block','margin': 'auto'})],
+             style={'display': 'inline-block','width' : '50%', 'float' : 'right','margin': 'auto'}),
 
-    html.Div([html.H4('Countys to Display for Bar Plot:'),
-              dcc.Dropdown(
-                  options=[{'label':'Suffolk', 'value':'Suffolk'},
-                           {'label':'Norfolk', 'value': 'Norfolk'},
-                           {'label':'Middlesex', 'value': 'Middlesex'},
-                           {'label':'Worcester', 'value': 'Worcester'},
-                           {'label':'Plymouth', 'value':  'Plymouth'},
-                           {'label':'Essex', 'value':  'Essex'},
-                           {'label':'Bristol', 'value':  'Bristol'},
-                           {'label':'Barnstable', 'value': 'Barnstable'},
-                           {'label':'Hampden', 'value':  'Hampden'},
-                           {'label':'Dukes', 'value':  'Dukes'},
-                           {'label':'Nantucket', 'value':  'Nantucket'},
-                           {'label':'Berkshire', 'value':  'Berkshire'}],
-                  value='Suffolk',
-                  id = 'County_Dropdown')],
-             style={'width' : '50%', 'float' : 'right'}),
+
+
     #html.Div(id='table_div')
     ])
 
 server = app.server
+
 @app.callback(
     Output(component_id="map_plot", component_property="figure"),
     [Input(component_id="County_checklist", component_property="value")]
