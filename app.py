@@ -118,7 +118,7 @@ app.layout = html.Div([
                             style={'display': 'inline-block','width' : '45%', 'float' : 'left','margin': 'auto'}),
 
 
-    html.Div([html.P('The check box element creates an interactive platform for users to compare the percentage of total earnings across counties. For example, if we choose Suffolk and Middlesex as the base of our analysis, then we can see that Suffolk is 86.9 percent compared to the sum of Suffolk and Middlesex. If we had chosen all counties, we would be able to see how much funds were dedicated to the city employee payroll in each county across the state of Massachusetts.'),
+    html.Div([html.P('Users can use the check box element to compare the percentage of total earnings across counties in the pie chart and identify departments with the highest earnings in the table. For example, if we choose Suffolk and Middlesex as the base of our analysis, then we can see that Suffolk is 86.9 percent compared to the sum of both counties. The table will also reflect the top 10 total earnings departments/county in Suffolk and Middlesex.'),
                 html.H4('Countys to Display for Pie Chart:'),
                 html.Div(dcc.Checklist(
                   options=[{'label':'Suffolk', 'value':'Suffolk'},
