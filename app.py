@@ -1,5 +1,5 @@
 """
-Dashboard created in lecture Week 10
+Dashboard created 
 """
 
 import dash
@@ -60,7 +60,19 @@ df_map= df_map[df_map["StateCode"]=="MA"]
 df_map=df_map.groupby(['county','POSTAL'],as_index=False)['Total.Earnings'].agg({'Total.Earnings':'sum'}).sort_values(by='Total.Earnings',ascending=False)
 df_map
 
+def generate_table(df, max_rows=10):
+    return html.Table([
+        html.Thead(
+            html.Tr([html.Th(col) for col in df.columns])
+        ),
+        html.Tbody([
+            html.Tr([
+                html.Td(df.iloc[i][col]) for col in df.columns
+            ]) for i in range(min(len(df), max_rows))
+        ])
+    ])
 
+app = dash.Dash(__name__, external_stylesheets=stylesheet)
 #
 fig = px.bar(df, x="Department", y="Total.Earnings", color="county")
 fig2 = px.pie(df_map,names='county',values='Total.Earnings')
@@ -126,10 +138,7 @@ app.layout = html.Div([
                   id = 'County_checklist'),style={'width' : '15%','float' : 'left','display': 'inline-block','margin': 'auto'}),
                 html.Div(dcc.Graph(figure=fig2, id='map_plot'),style={'width' : '60%','float' : 'right','display': 'inline-block','margin': 'auto'})],
              style={'display': 'inline-block','width' : '50%', 'float' : 'right','margin': 'auto'}),
-
-
-
-    #html.Div(id='table_div')
+    html.Div(id='table_div')
     ])
 
 server = app.server
@@ -153,6 +162,14 @@ def update_plot(counties):
     df2 = df2[['Department', 'Total.Earnings', 'county']]
     fig = px.bar(df2,x="Department", y="Total.Earnings", color="county")
     return fig
+
+@app.callback(
+    Output(component_id="table_div", component_property="children"),
+    [Input(component_id="County_Dropdown", component_property="value")]
+)
+def update_table(counties):
+    x = df[df.county.isin(counties)].sort_values('City')
+    return generate_table(x)
 
 if __name__ == '__main__':
     app.run_server(debug=True)
